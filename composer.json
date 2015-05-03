@@ -19,8 +19,8 @@
     "knplabs/knp-paginator-bundle": "~2.4"
   },
   "autoload": {
-    "psr-0" : {
-      "Citrax\\Bundle\\DatabaseSwiftMailerBundle\\" : "src"
+    "psr-4" : {
+      "Citrax\\Bundle\\DatabaseSwiftMailerBundle\\" : ""
     }
   }
 }
