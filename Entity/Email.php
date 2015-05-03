@@ -18,6 +18,7 @@ class Email
     const STATUS_READY = 'READY';
     const STATUS_PROCESSING = 'PROCESSING';
     const STATUS_COMPLETE = 'COMPLETE';
+    const STATUS_CANCELLED = 'CANCELLED';
 
 
     /**

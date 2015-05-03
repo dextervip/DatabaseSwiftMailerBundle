@@ -1,9 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+<div class="row">
+    <div class="col-md-12">
+
     <h1>Email</h1>
 
-    <table class="record_properties">
+    <table class="record_properties table table-hover">
         <tbody>
 
             <tr>
@@ -57,12 +60,19 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('email-spool') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('email-spool') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('email-spool_delete',{id : entity.id}) }}">
+                Delete
+            </a>
+        </li>
+    </ul>
+
+    </div>
+</div>
 {% endblock %}

@@ -59,21 +59,43 @@ class EmailController extends Controller
             throw $this->createNotFoundException('Unable to find Email entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing Email entity.
+     * Retry to send an email
      *
      * @Route("/{id}/retry", name="email-spool_retry")
      * @Method("GET")
      */
     public function retryAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CitraxDatabaseSwiftMailerBundle:Email')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Email entity.');
+        }
+
+        $entity->setStatus(Email::STATUS_FAILED);
+        $entity->setRetries(0);
+
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('email-spool'));
+    }
+
+    /**
+     * Resend an email
+     *
+     * @Route("/{id}/resend", name="email-spool_resend")
+     * @Method("GET")
+     */
+    public function resendAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -93,45 +115,50 @@ class EmailController extends Controller
     }
 
     /**
-     * Deletes a Email entity.
+     * Cancel an email sending
      *
-     * @Route("/{id}", name="email-spool_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/cancel", name="email-spool_cancel")
+     * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+    public function cancelAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('CitraxDatabaseSwiftMailerBundle:Email')->find($id);
+        $entity = $em->getRepository('CitraxDatabaseSwiftMailerBundle:Email')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Email entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Email entity.');
         }
+
+        $entity->setStatus(Email::STATUS_CANCELLED);
+
+        $em->persist($entity);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('email-spool'));
     }
 
     /**
-     * Creates a form to delete a Email entity by id.
+     * Deletes a Email entity.
      *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @Route("/{id}/delete", name="email-spool_delete")
+     * @Method("GET")
      */
-    private function createDeleteForm($id)
+    public function deleteAction(Request $request, $id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('email-spool_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('CitraxDatabaseSwiftMailerBundle:Email')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Email entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+
+
+        return $this->redirect($this->generateUrl('email-spool'));
     }
+
 }

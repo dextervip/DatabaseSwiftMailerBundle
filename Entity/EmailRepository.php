@@ -56,6 +56,7 @@ class EmailRepository extends EntityRepository
     public function markCompleteSending(Email $email){
         $email->setStatus(Email::STATUS_COMPLETE);
         $email->setSentAt(new \DateTime());
+        $email->setErrorMessage('');
         $em = $this->getEntityManager();
         $em->persist($email);
         $em->flush();

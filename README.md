@@ -1,20 +1,41 @@
 # DatabaseSwiftMailerBundle
 ## Introduction
 
-This bundles add a database driven spool to your project. 
+This bundle add a database driven swiftmailer spool to your project. It requires Symfony 2.4+.
+
+### Features
+
+- Auto Retrying: set a maximum number of retries that spool will try to send in case of failure
+- Dashboard to list the email spool and perform some actions
+- Retry sending an email
+- Cancelling an email sending 
+- Resending an email
 
 ## Installing
 
 ### Add composer
 
+Add the dependency to your composer.json
+
+```yml
+    "require": {
+        ...
+	    "dextervip/database-swiftmalier-bundle" : "dev-master"
+	}
+```
 
 ### Add bundle class in kernel
 
 Register the bundle class in your AppKernel.php
 ```php
-    ...
-    new Citrax\Bundle\DatabaseSwiftMailerBundle\CitraxDatabaseSwiftMailerBundle(),
-    ...
+    public function registerBundles()
+    {
+        $bundles = array(
+        ...
+        new Citrax\Bundle\DatabaseSwiftMailerBundle\CitraxDatabaseSwiftMailerBundle(),
+        ...
+        );
+    }
 ```
 
 ### Add routes
@@ -63,6 +84,10 @@ You may add a cron job entry to run it periodically.
 
 You can check the spool status with all emails at http://your_project_url/email-spool
 
+
+## To Do's
+
+- Filter emails
 
 
 ## License
