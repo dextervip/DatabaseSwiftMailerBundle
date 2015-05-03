@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Email list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+                <th>Retries</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Created by</th>
+                <th>Updated by</th>
+                <th>Sent at</th>
+                <th>Error message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr class="{{ entity.status == 'FAILED' ? ' danger' : '' }} {{ entity.status == 'READY' ? ' info' : '' }} {{ entity.status == 'COMPLETE' ? ' success' : '' }}">
+                <td>{{ entity.subject }}</td>
+                <td>{{ entity.fromEmail }}</td>
+                <td>{{ entity.toEmail }}</td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.retries }}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.createdBy }}</td>
+                <td>{{ entity.updatedBy }}</td>
+                <td>{% if entity.sentAt %}{{ entity.sentAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.errorMessage }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('email-spool_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('email-spool_retry', { 'id': entity.id }) }}">retry</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <div class="navigation">
+            {{ knp_pagination_render(entities) }}
+        </div>
+    </div>
+
+
+{% endblock %}

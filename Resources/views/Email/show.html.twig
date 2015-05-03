@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Email</h1>
+
+    <table class="record_properties">
+        <tbody>
+
+            <tr>
+                <th>Subject</th>
+                <td>{{ entity.subject }}</td>
+            </tr>
+            <tr>
+                <th>From</th>
+                <td>{{ entity.fromEmail }}</td>
+            </tr>
+            <tr>
+                <th>To</th>
+                <td>{{ entity.toEmail }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ entity.body|raw }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+                <th>Retries</th>
+                <td>{{ entity.retries }}</td>
+            </tr>
+            <tr>
+                <th>Created at</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Updated at</th>
+                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Created by</th>
+                <td>{{ entity.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Updated by</th>
+                <td>{{ entity.updatedBy }}</td>
+            </tr>
+            <tr>
+                <th>Sent at</th>
+                <td>{{ entity.sentAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Error message</th>
+                <td>{{ entity.errorMessage }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('email-spool') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
