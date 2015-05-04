@@ -1,7 +1,7 @@
 # DatabaseSwiftMailerBundle
 ## Introduction
 
-This bundle add a database driven swiftmailer spool to your project. It requires Symfony 2.4+.
+This bundle add a database driven swiftmailer spool to your symfony 2 project. It requires Symfony 2.4+ and usage of entities with Doctrine ORM.
 
 ### Features
 
@@ -66,6 +66,8 @@ Change your spool type from memory to db in your config.yml
 ```yml
     spool:     { type: db }
 ```
+
+### Overriding default templates 
 
 ### Extra config
 

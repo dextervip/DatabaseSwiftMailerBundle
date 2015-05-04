@@ -1,7 +1,7 @@
 {
   "name": "dextervip/database-swiftmalier-bundle",
   "type": "library",
-  "description": "Database Spool Bundle for SwiftMailer",
+  "description": "Database Spool Bundle for SwiftMailer and Symfony 2",
   "keywords": ["swiftmailer","database","symfony","bundle"],
   "homepage": "https://github.com/dextervip/DatabaseSwiftMailerBundle",
   "license": "MIT",
