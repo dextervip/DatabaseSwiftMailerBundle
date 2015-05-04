@@ -26,7 +26,11 @@
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{ entity.status }}</td>
+                <td>
+                    <span class="label label-{{ entity.status == 'COMPLETE' ? 'success' }}{{ entity.status == 'READY' ? 'info' }}{{ entity.status == 'FAILED' or entity.status == 'CANCELLED' ? 'danger' }}">
+                    {{ entity.status }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Retries</th>
@@ -59,18 +63,16 @@
         </tbody>
     </table>
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('email-spool') }}">
+
+    <div class="btn-toolbar">
+        <a href="{{ path('email-spool') }}" class="btn btn-default">
                 Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('email-spool_delete',{id : entity.id}) }}">
+        </a>
+        <a href="{{ path('email-spool_delete',{id : entity.id}) }}" class="btn btn-danger">
                 Delete
-            </a>
-        </li>
-    </ul>
+        </a>
+    </div>
+
 
     </div>
 </div>

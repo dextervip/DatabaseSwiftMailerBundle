@@ -24,12 +24,16 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 {% for entity in entities %}
-                    <tr class="{{ entity.status == 'FAILED' ? ' danger' : '' }} {{ entity.status == 'READY' ? ' info' : '' }} {{ entity.status == 'COMPLETE' ? ' success' : '' }}">
+                    <tr class="{{ entity.status == 'FAILED' or entity.status == 'CANCELLED' ? ' danger' : '' }} {{ entity.status == 'READY' ? ' info' : '' }} {{ entity.status == 'COMPLETE' ? ' success' : '' }}">
                         <td>{{ entity.subject }}</td>
                         <td>{{ entity.fromEmail }}</td>
                         <td>{{ entity.toEmail }}</td>
-                        <td>{{ entity.status }}</td>
+                        <td><span class="label label-{{ entity.status == 'COMPLETE' ? 'success' }}{{ entity.status == 'READY' ? 'info' }}{{ entity.status == 'FAILED' or entity.status == 'CANCELLED' ? 'danger' }}">
+                                {{ entity.status }}
+                            </span>
+                        </td>
                         <td>{{ entity.retries }}</td>
                         <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                         <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -38,27 +42,23 @@
                         <td>{% if entity.sentAt %}{{ entity.sentAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                         <td>{{ entity.errorMessage }}</td>
                         <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('email-spool_show', { 'id': entity.id }) }}">show</a>
-                                </li>
+                            <div class=" btn-group-vertical">
+                                        <a href="{{ path('email-spool_show', { 'id': entity.id }) }}" class="btn btn-default">show</a>
                                 {% if entity.status == 'READY' %}
-                                    <li>
-                                        <a href="{{ path('email-spool_cancel', { 'id': entity.id }) }}">cancel</a>
-                                    </li>
+                                        <a href="{{ path('email-spool_cancel', { 'id': entity.id }) }}" class="btn btn-danger">cancel</a>
                                 {% endif %}
                                 {% if entity.status == 'FAILED' %}
-                                    <li>
-                                        <a href="{{ path('email-spool_retry', { 'id': entity.id }) }}">retry</a>
-                                    </li>
+                                        <a href="{{ path('email-spool_retry', { 'id': entity.id }) }}" class="btn btn-danger">retry</a>
                                 {% endif %}
                                 {% if entity.status == 'COMPLETE' or entity.status == 'CANCELLED' %}
-                                    <li>
-                                        <a href="{{ path('email-spool_resend', { 'id': entity.id }) }}">resend</a>
-                                    </li>
+                                        <a href="{{ path('email-spool_resend', { 'id': entity.id }) }}" class="btn btn-primary">resend</a>
                                 {% endif %}
-                            </ul>
+                            </div>
                         </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="text-center" colspan="12">No emails in the spool.</td>
                     </tr>
                 {% endfor %}
                 </tbody>

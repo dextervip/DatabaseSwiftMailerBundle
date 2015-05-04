@@ -29,12 +29,14 @@ Add the dependency to your composer.json
 
 ### Add bundle class in kernel
 
-Register the bundle class in your AppKernel.php
+Register the bundle class and its dependencies in your AppKernel.php
 ```php
     public function registerBundles()
     {
         $bundles = array(
         ...
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         new Citrax\Bundle\DatabaseSwiftMailerBundle\CitraxDatabaseSwiftMailerBundle(),
         ...
         );
