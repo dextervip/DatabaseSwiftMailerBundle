@@ -69,6 +69,38 @@ Change your spool type from memory to db in your config.yml
 
 ### Overriding default templates 
 
+You may want to override the default template to have the look and feel of your application. You can do it by creating a new bundle and defining its parent as CitraxDatabaseSwiftMailerBundle.
+
+1. Create a new empty bundle E.g. EmailBundle
+
+2. Edit its bundle class and add a getParent() method returning 'CitraxDatabaseSwiftMailerBundle'
+
+```php
+class EmailBundle extends Bundle
+{
+    public function getParent()
+    {
+        return 'CitraxDatabaseSwiftMailerBundle';
+    }
+}
+```
+
+3. Create a twig template inside your new bundle in Resources/views/layout.html.twig and edit it to fit into your application layout. See the example below:
+
+```twig
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}Email Spool{% endblock %}
+
+{% block body %}
+    {% block database_swiftmailer_content %}{% endblock %}
+{% endblock %}
+```
+
+4. All done!
+
+
+
 ### Extra config
 
 ??
