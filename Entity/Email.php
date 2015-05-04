@@ -59,7 +59,7 @@ class Email
     private $body;
 
     /**
-     * @var \Swift_Message
+     * @var string
      *
      * @ORM\Column(name="message", type="text")
      */
@@ -227,7 +227,7 @@ class Email
 
 
     /**
-     * @return \Swift_Message
+     * @return \Swift_Mime_Message
      */
     public function getMessage()
     {
@@ -235,9 +235,9 @@ class Email
     }
 
     /**
-     * @param \Swift_Message $message
+     * @param \Swift_Mime_Message $message
      */
-    public function setMessage(\Swift_Message $message)
+    public function setMessage(\Swift_Mime_Message $message)
     {
         $this->message = base64_encode(serialize($message));
     }

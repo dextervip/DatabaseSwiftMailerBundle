@@ -1,4 +1,7 @@
 # DatabaseSwiftMailerBundle
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dextervip/DatabaseSwiftMailerBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dextervip/DatabaseSwiftMailerBundle/?branch=master)
+
 ## Introduction
 
 This bundle add a database driven swiftmailer spool to your symfony 2 project. It requires Symfony 2.4+ and usage of entities with Doctrine ORM.

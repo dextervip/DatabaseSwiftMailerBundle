@@ -144,7 +144,7 @@ class EmailController extends Controller
      * @Route("/{id}/delete", name="email-spool_delete")
      * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
 
         $em = $this->getDoctrine()->getManager();
