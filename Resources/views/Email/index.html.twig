@@ -29,7 +29,7 @@
                     <tr class="{{ entity.status == 'FAILED' or entity.status == 'CANCELLED' ? ' danger' : '' }} {{ entity.status == 'READY' ? ' info' : '' }} {{ entity.status == 'COMPLETE' ? ' success' : '' }}">
                         <td>{{ entity.subject }}</td>
                         <td>{{ entity.fromEmail }}</td>
-                        <td>{{ entity.toEmail }}</td>
+                        <td>{{ entity.toEmail }} {{ entity.ccEmail }} {{ entity.bccEmail }}</td>
                         <td><span class="label label-{{ entity.status == 'COMPLETE' ? 'success' }}{{ entity.status == 'READY' ? 'info' }}{{ entity.status == 'FAILED' or entity.status == 'CANCELLED' ? 'danger' }}">
                                 {{ entity.status }}
                             </span>
