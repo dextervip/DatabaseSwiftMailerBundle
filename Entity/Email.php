@@ -47,9 +47,23 @@ class Email
     /**
      * @var string
      *
-     * @ORM\Column(name="toEmail", type="string", length=255)
+     * @ORM\Column(name="toEmail", type="string", length=255, nullable=true)
      */
     private $toEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ccEmail", type="string", length=255, nullable=true)
+     */
+    private $ccEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bccEmail", type="string", length=255, nullable=true)
+     */
+    private $bccEmail;
 
     /**
      * @var string
@@ -132,7 +146,7 @@ class Email
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -155,7 +169,7 @@ class Email
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -178,7 +192,7 @@ class Email
     /**
      * Get fromEmail
      *
-     * @return string 
+     * @return string
      */
     public function getFromEmail()
     {
@@ -201,12 +215,45 @@ class Email
     /**
      * Get toEmail
      *
-     * @return string 
+     * @return string
      */
     public function getToEmail()
     {
         return $this->toEmail;
     }
+
+    /**
+     * @return string
+     */
+    public function getCcEmail()
+    {
+        return $this->ccEmail;
+    }
+
+    /**
+     * @param string $ccEmail
+     */
+    public function setCcEmail($ccEmail)
+    {
+        $this->ccEmail = $ccEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBccEmail()
+    {
+        return $this->bccEmail;
+    }
+
+    /**
+     * @param string $bccEmail
+     */
+    public function setBccEmail($bccEmail)
+    {
+        $this->bccEmail = $bccEmail;
+    }
+
 
     /**
      * @return string

@@ -66,7 +66,17 @@ class DatabaseSpool extends \Swift_ConfigurableSpool {
     {
         $email = new Email();
         $email->setFromEmail(implode('; ', array_keys($message->getFrom())) );
-        $email->setToEmail(implode('; ', array_keys($message->getTo())) );
+
+        if($message->getTo() !== null ){
+            $email->setToEmail(implode('; ', array_keys($message->getTo())) );
+        }
+        if($message->getCc() !== null ){
+            $email->setCcEmail(implode('; ', array_keys($message->getCc())) );
+        }
+        if($message->getBcc() !== null ){
+            $email->setBccEmail(implode('; ', array_keys($message->getBcc())) );
+        }
+
         $email->setBody($message->getBody());
         $email->setSubject($message->getSubject());
         $email->setMessage($message);
