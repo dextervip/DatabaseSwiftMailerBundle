@@ -127,7 +127,9 @@ You can check the spool status with all emails at http://your_project_url/email-
 ## To Do's
 
 - Filter emails
-
+- Insert error message once it reaches the maximum of retries
+- Last run date
+- Count total sent
 
 ## License
 MIT

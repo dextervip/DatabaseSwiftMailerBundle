@@ -40,30 +40,37 @@ class Email
     /**
      * @var string
      *
-     * @ORM\Column(name="fromEmail", type="string", length=255)
+     * @ORM\Column(name="from_email", type="string", length=255)
      */
     private $fromEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="toEmail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="to_email", type="string", length=255, nullable=true)
      */
     private $toEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ccEmail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="cc_email", type="string", length=255, nullable=true)
      */
     private $ccEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bccEmail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="bcc_email", type="string", length=255, nullable=true)
      */
     private $bccEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reply_to_email", type="string", length=255, nullable=true)
+     */
+    private $replyToEmail;
 
     /**
      * @var string
@@ -252,6 +259,24 @@ class Email
     public function setBccEmail($bccEmail)
     {
         $this->bccEmail = $bccEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReplyToEmail()
+    {
+        return $this->replyToEmail;
+    }
+
+    /**
+     * @param string $replyToEmail
+     * @return Email
+     */
+    public function setReplyToEmail($replyToEmail)
+    {
+        $this->replyToEmail = $replyToEmail;
+        return $this;
     }
 
 

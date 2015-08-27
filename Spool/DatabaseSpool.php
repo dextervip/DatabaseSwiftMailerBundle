@@ -76,6 +76,9 @@ class DatabaseSpool extends \Swift_ConfigurableSpool {
         if($message->getBcc() !== null ){
             $email->setBccEmail(implode('; ', array_keys($message->getBcc())) );
         }
+        if($message->getReplyTo() !== null ){
+            $email->setReplyToEmail(implode('; ', array_keys($message->getReplyTo())) );
+        }
 
         $email->setBody($message->getBody());
         $email->setSubject($message->getSubject());
