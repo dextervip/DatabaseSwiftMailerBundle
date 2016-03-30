@@ -1,12 +1,11 @@
 services:
     repository.email:
         class: Citrax\Bundle\DatabaseSwiftMailerBundle\Entity\EmailRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
-        arguments: ["CitraxDatabaseSwiftMailerBundle:Email"]
+        factory: ['@doctrine.orm.default_entity_manager',getRepository]
+        arguments: ['CitraxDatabaseSwiftMailerBundle:Email']
     citrax.database.swift_mailer.spool:
         class: Citrax\Bundle\DatabaseSwiftMailerBundle\Spool\DatabaseSpool
-        arguments: [@repository.email, '%citrax_database_swift_mailer.params%']
+        arguments: ['@repository.email', '%citrax_database_swift_mailer.params%']
     swiftmailer.spool.db:
         alias: citrax.database.swift_mailer.spool
     swiftmailer.mailer.default.spool.db:
