@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class EmailRepository extends EntityRepository
 {
-    public function addEmail(Email $email){
+    public function addEmail(Email $email)
+    {
         $em = $this->getEntityManager();
         $email->setStatus(Email::STATUS_READY);
         $email->setRetries(0);
@@ -20,40 +21,55 @@ class EmailRepository extends EntityRepository
         $em->flush();
     }
 
-    public function getAllEmails(){
+    public function getAllEmails()
+    {
         $qb = $this->createQueryBuilder('e');
 
-        $qb->addOrderBy('e.createdAt','DESC');
+        $qb->addOrderBy('e.createdAt', 'DESC');
         return $qb->getQuery();
     }
 
-    public function getEmailQueue($limit = 100){
+    public function getEmailQueue($limit = 100)
+    {
         $qb = $this->createQueryBuilder('e');
 
-        $qb->where($qb->expr()->eq('e.status',':status'))->setParameter(':status' ,Email::STATUS_READY);
-        $qb->orWhere($qb->expr()->eq('e.status',':status_1'))->setParameter(':status_1' ,Email::STATUS_FAILED);
-        $qb->andWhere($qb->expr()->lt('e.retries',':retries'))->setParameter(':retries',10);
+        $qb->where($qb->expr()->eq('e.status', ':status'))->setParameter(':status', Email::STATUS_READY);
+        $qb->orWhere($qb->expr()->eq('e.status', ':status_1'))->setParameter(':status_1', Email::STATUS_FAILED);
+        $qb->andWhere($qb->expr()->lt('e.retries', ':retries'))->setParameter(':retries', 10);
 
 
-        $qb->addOrderBy('e.retries','ASC');
-        $qb->addOrderBy('e.createdAt','ASC');
-        if(empty($limit) === false){
+        $qb->addOrderBy('e.retries', 'ASC');
+        $qb->addOrderBy('e.createdAt', 'ASC');
+        if (empty($limit) === false) {
             $qb->setMaxResults($limit);
         }
 
-        return $qb->getQuery()->getResult();
+        $emails = $qb->getQuery()->getResult();
+        if ($emails->count() > 0) {
+            $ids = [];
+            foreach ($emails as $email) {
+                $ids[] = $email->getId();
+            }
+            $query = $this->_em->createQuery("UPDATE CitraxDatabaseSwiftMailerBundle:Email e SET e.status = '" . Email::STATUS_PROCESSING . "' WHERE e.id IN (:ids)");
+            $query->setParameter(':ids', $ids);
+            $query->execute();
+        }
+
+        return $emails;
     }
 
-    public function markFailedSending(Email $email, \Exception $ex){
+    public function markFailedSending(Email $email, \Exception $ex)
+    {
         $email->setErrorMessage($ex->getMessage());
         $email->setStatus(Email::STATUS_FAILED);
-        $email->setRetries($email->getRetries()+1);
+        $email->setRetries($email->getRetries() + 1);
         $em = $this->getEntityManager();
         $em->persist($email);
         $em->flush();
     }
 
-    public function markCompleteSending(Email $email){
+    public function markCompleteSending(Email $email)
+    {
         $email->setStatus(Email::STATUS_COMPLETE);
         $email->setSentAt(new \DateTime());
         $email->setErrorMessage('');
@@ -61,7 +77,6 @@ class EmailRepository extends EntityRepository
         $em->persist($email);
         $em->flush();
     }
-
 
 
 }
