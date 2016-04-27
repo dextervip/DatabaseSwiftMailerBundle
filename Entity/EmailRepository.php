@@ -45,7 +45,7 @@ class EmailRepository extends EntityRepository
         }
 
         $emails = $qb->getQuery()->getResult();
-        if ($emails->count() > 0) {
+        if (count($emails) > 0) {
             $ids = [];
             foreach ($emails as $email) {
                 $ids[] = $email->getId();
