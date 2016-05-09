@@ -109,9 +109,10 @@ class DatabaseSpool extends \Swift_ConfigurableSpool {
             /*@var $message \Swift_Mime_Message */
             $message = $email->getMessage();
             try{
-                $count+= $transport->send($message, $failedRecipients);
-                if($count > 0){
+                $count_= $transport->send($message, $failedRecipients);
+                if($count_ > 0){
                     $this->repository->markCompleteSending($email);
+                    $count += $count_;
                 }else{
                     throw new \Swift_SwiftException('The email was not sent.');
                 }
