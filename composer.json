@@ -1,5 +1,5 @@
 {
-  "name": "dextervip/database-swiftmalier-bundle",
+  "name": "dextervip/database-swiftmailer-bundle",
   "type": "library",
   "description": "Database Spool Bundle for SwiftMailer and Symfony 2",
   "keywords": ["swiftmailer","database","symfony","bundle"],
